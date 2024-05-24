@@ -31,6 +31,17 @@ const NewIssuePage = () => {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setSubmitting(true);
+      await axios.post("/api/issues", data);
+      router.push("/issues");
+    } catch (error) {
+      setSubmitting(false);
+      setError("An error occurred. Please try again.");
+    }
+  })
+
   return (
     <div className="max-w-xl space-y-3">
       {error && (
@@ -41,16 +52,7 @@ const NewIssuePage = () => {
         </Alert>
       )}
       <form
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setSubmitting(true);
-            await axios.post("/api/issues", data);
-            router.push("/issues");
-          } catch (error) {
-            setSubmitting(false);
-            setError("An error occurred. Please try again.");
-          }
-        })}
+        onSubmit={onSubmit}
         className="space-y-3"
       >
         <Input placeholder="Title" {...register("title")} />
