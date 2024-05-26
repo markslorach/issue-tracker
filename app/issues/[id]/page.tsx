@@ -1,22 +1,27 @@
-import prisma from "@/prisma/client"
-import { notFound } from "next/navigation"
+import IssueStatusBadge from "@/app/components/IssueStatusBadge";
+import { Card } from "@/components/ui/card";
+import prisma from "@/prisma/client";
+import { notFound } from "next/navigation";
 
-const IssueDetailPage = async ({params}: {params: {id: string}}) => {
+const IssueDetailPage = async ({ params }: { params: { id: string } }) => {
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) },
+  });
 
-    const issue = await prisma.issue.findUnique({
-        where: {id: parseInt(params.id)},
-    })
-
-    if (!issue) notFound()
+  if (!issue) notFound();
 
   return (
-    <div>
-        <h1>{issue.title}</h1>
-        <p>{issue.description}</p>
-        <p>{issue.status}</p>
+    <div className="space-y-3">
+      <h1 className="text-2xl font-bold">{issue.title}</h1>
+      <div className="flex space-x-2">
+        <IssueStatusBadge status={issue.status} />
         <p>{issue.createdAt.toDateString()}</p>
+      </div>
+      <Card className="p-3">
+        <p>{issue.description}</p>
+      </Card>
     </div>
-  )
-}
+  );
+};
 
-export default IssueDetailPage
+export default IssueDetailPage;
