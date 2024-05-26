@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 // icons
 import { Bug } from "lucide-react";
+import { ThemeSwitcher } from "./components/ThemeSwitcher";
 
 type NavLink = {
   name: string;
@@ -39,6 +40,7 @@ const NavBar = () => {
           </li>
         ))}
       </ul>
+      {/* <ThemeSwitcher/> */}
     </nav>
   );
 };
