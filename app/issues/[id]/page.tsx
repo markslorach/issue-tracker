@@ -12,7 +12,7 @@ const IssueDetailPage = async ({ params }: { params: { id: string } }) => {
   if (!issue) notFound();
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-xl">
       <h1 className="text-2xl font-bold">{issue.title}</h1>
       <div className="flex space-x-2">
         <IssueStatusBadge status={issue.status} />
