@@ -19,6 +19,7 @@ type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
   const router = useRouter();
+
   const {
     register,
     control,
@@ -40,7 +41,7 @@ const NewIssuePage = () => {
       setSubmitting(false);
       setError("An error occurred. Please try again.");
     }
-  })
+  });
 
   return (
     <div className="max-w-xl space-y-3">
@@ -51,10 +52,7 @@ const NewIssuePage = () => {
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
-      <form
-        onSubmit={onSubmit}
-        className="space-y-3"
-      >
+      <form onSubmit={onSubmit} className="space-y-3">
         <Input placeholder="Title" {...register("title")} />
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
