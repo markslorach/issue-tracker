@@ -18,9 +18,9 @@ const LoadingIssuesPage = () => {
       <Table className="border">
         <TableHeader>
           <TableRow>
-            <TableHead>Issue</TableHead>
-            <TableHead className="hidden md:table-cell">Status</TableHead>
-            <TableHead className="hidden md:table-cell">Created</TableHead>
+            <TableHead className="w-1/3">Issue</TableHead>
+            <TableHead className="hidden md:table-cell w-1/3">Status</TableHead>
+            <TableHead className="hidden md:table-cell w-1/3">Created</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
