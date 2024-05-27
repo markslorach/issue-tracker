@@ -26,7 +26,7 @@ interface Props {
   issue?: Issue;
 }
 
-const IssueForm = ({issue}: Props) => {
+const IssueForm = ({ issue }: Props) => {
   const router = useRouter();
 
   const {
@@ -44,7 +44,8 @@ const IssueForm = ({issue}: Props) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setSubmitting(true);
-      await axios.post("/api/issues", data);
+      if (issue) await axios.patch("/api/issues/" + issue.id, data);
+      else await axios.post("/api/issues", data);
       router.push("/issues");
     } catch (error) {
       setSubmitting(false);
@@ -62,7 +63,11 @@ const IssueForm = ({issue}: Props) => {
         </Alert>
       )}
       <form onSubmit={onSubmit} className="space-y-3">
-        <Input placeholder="Title" defaultValue={issue?.title} {...register("title")} />
+        <Input
+          placeholder="Title"
+          defaultValue={issue?.title}
+          {...register("title")}
+        />
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
         <Controller
@@ -76,7 +81,8 @@ const IssueForm = ({issue}: Props) => {
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
         <Button disabled={submitting}>
-          Submit New Issue{submitting && <Spinner />}
+          {issue ? "Update Issue" : "Submit New Issue"}
+          {submitting && <Spinner />}
         </Button>
       </form>
     </div>
