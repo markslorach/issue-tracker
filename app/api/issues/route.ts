@@ -2,16 +2,7 @@ import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { issueSchema } from "@/app/validationSchemas";
 
-export async function GET() {
-  const issues = await prisma.issue.findMany();
-
-  if (issues.length === 0) {
-    return NextResponse.json({ error: "No issues found" }, { status: 404 });
-  }
-
-  return NextResponse.json(issues);
-}
-
+// CREATE
 export async function POST(request: NextRequest) {
   // Create request body
   const body = await request.json();
@@ -30,4 +21,15 @@ export async function POST(request: NextRequest) {
   });
   // Return the new issue
   return NextResponse.json(newIssue, { status: 201 });
+}
+
+// READ
+export async function GET() {
+  const issues = await prisma.issue.findMany();
+
+  if (issues.length === 0) {
+    return NextResponse.json({ error: "No issues found" }, { status: 404 });
+  }
+
+  return NextResponse.json(issues);
 }
