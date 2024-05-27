@@ -8,6 +8,7 @@ export async function PATCH(
 ) {
   const body = await request.json();
   const validation = issueSchema.safeParse(body);
+  
   if (!validation.success) {
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
@@ -15,6 +16,7 @@ export async function PATCH(
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
   });
+
   if (!issue) {
     return NextResponse.json({ error: "Issue not found" }, { status: 404 });
   }
