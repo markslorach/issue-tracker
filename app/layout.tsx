@@ -28,8 +28,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         > */}
-          <NavBar />
-          <main className="p-5">{children}</main>
+        <NavBar />
+        <main className="p-5">
+          <div className="container">{children}</div>
+        </main>
         {/* </ThemeProvider> */}
       </body>
     </html>
