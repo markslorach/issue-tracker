@@ -2,7 +2,11 @@ import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
-import DeleteIssueButton from "./DeleteIssueButton";
+import dynamic from "next/dynamic";
+
+const DeleteIssueButton = dynamic(() => import("@/app/issues/[id]/DeleteIssueButton"), {
+  ssr: false,
+});
 
 const IssueDetailPage = async ({ params }: { params: { id: string } }) => {
   const issue = await prisma.issue.findUnique({
