@@ -15,29 +15,32 @@ import {
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { on } from "events";
+import Spinner from "@/app/components/Spinner";
 
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
   const router = useRouter();
   const [error, setError] = useState(false);
+  const [isDeleting, setDeleting] = useState(false);
 
   const deleteIssue = async () => {
     try {
+        setDeleting(true);
       await axios.delete(`/api/issues/${issueId}`);
       router.push("/issues");
       router.refresh();
     } catch (error) {
+    setDeleting(false);
       setError(true);
     }
-  }
+  };
 
   return (
     <>
       <AlertDialog>
-        <AlertDialogTrigger>
-          <Button variant={"destructive"} className="flex w-full">
+        <AlertDialogTrigger disabled={isDeleting}>
+          <Button variant={"destructive"} disabled={isDeleting} className="flex w-full">
             <CircleX className="w-4 h-4 mr-2" />
-            Delete Issue
+            Delete Issue {isDeleting && <Spinner/>}
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
@@ -50,9 +53,7 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={deleteIssue}
-            >
+            <AlertDialogAction onClick={deleteIssue}>
               Continue
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -68,7 +69,9 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setError(false)}>OK</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setError(false)}>
+              OK
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
