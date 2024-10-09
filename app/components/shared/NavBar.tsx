@@ -26,7 +26,7 @@ const NavBar = () => {
               <li
                 key={route.path}
                 className={cn({
-                  "text-zinc-500 hover:text-blue-400 transition-colors": true,
+                  "text-zinc-500 hover:text-blue-500 transition-colors": true,
                   "text-blue-500": pathname === route.path,
                 })}
               >
