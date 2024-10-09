@@ -1,7 +1,12 @@
+import { Button } from "@/components/ui/Button";
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <main>
-      <h1 className="text-2xl font-semibold">Dashboard</h1>
+      <Link href="/issues/new/">
+        <Button>New Issue</Button>
+      </Link>
     </main>
   );
 }
