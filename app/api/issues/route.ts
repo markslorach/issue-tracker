@@ -1,11 +1,7 @@
+import { createIssueSchema } from "@/app/validationSchemas";
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-
-export const createIssueSchema = z.object({
-  title: z.string().min(1).max(255),
-  description: z.string().min(1),
-});
 
 type Issue = z.infer<typeof createIssueSchema>;
 

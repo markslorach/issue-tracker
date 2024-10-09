@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "./components/shared/NavBar";
 import Container from "./components/shared/Container";
-import { ContainerWithChildren } from "postcss/lib/container";
+import { Toaster } from 'sonner'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,6 +31,7 @@ export default function RootLayout({
       <body className={`${geistSans.className} antialiased`}>
         <NavBar />
         <Container className="pt-16">{children}</Container>
+        <Toaster position="top-right"/>
       </body>
     </html>
   );
