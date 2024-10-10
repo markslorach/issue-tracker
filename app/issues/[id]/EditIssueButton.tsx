@@ -9,11 +9,11 @@ type EditIssueButtonProps = {
 const EditIssueButton = ({ issueId }: EditIssueButtonProps) => {
   return (
     <Link href={`/issues/${issueId}/edit`}>
-      <Button>
+      <Button className="w-full">
         <SquarePen className="w-4 h-4 mr-2" />
         Edit Issue
       </Button>
-    </Link>
+     </Link>
   );
 };
 

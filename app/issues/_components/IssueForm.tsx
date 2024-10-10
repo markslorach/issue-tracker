@@ -10,7 +10,7 @@ import {
   updateIssueAction,
 } from "@/app/actions/issueActions";
 import { toast } from "sonner";
-import { createIssueSchema } from "@/app/validationSchemas";
+import { issueSchema } from "@/app/validationSchemas";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import { LoaderCircle } from "lucide-react";
 import { Label } from "@/components/ui/label";
@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Issue } from "@prisma/client";
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 
 type IssueFormProps = {
   issue?: Issue;
@@ -33,7 +33,7 @@ const IssueForm = ({ issue }: IssueFormProps) => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   });
 
   const onFormSubmission = async (data: IssueFormData) => {
@@ -43,11 +43,8 @@ const IssueForm = ({ issue }: IssueFormProps) => {
     };
 
     try {
-      if (issue) {
-        await updateIssueAction(issue.id, newIssue);
-      } else {
-        await createIssueAction(newIssue);
-      }
+      if (issue) await updateIssueAction(issue.id, newIssue);
+      else await createIssueAction(newIssue);
       router.push("/issues");
     } catch (error) {
       toast.error("An unexpected error occurred");
@@ -88,7 +85,7 @@ const IssueForm = ({ issue }: IssueFormProps) => {
         </div>
 
         <Button disabled={isSubmitting}>
-          Submit New Issue
+          {issue ? "Update Issue" : "Create Issue"}
           {isSubmitting && <LoaderCircle className="ml-1.5 animate-spin" />}
         </Button>
       </form>

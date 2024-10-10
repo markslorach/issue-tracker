@@ -2,12 +2,12 @@
 import { z } from "zod";
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { createIssueSchema } from "../validationSchemas";
+import { issueSchema } from "../validationSchemas";
 
-type Issue = z.infer<typeof createIssueSchema>;
+type Issue = z.infer<typeof issueSchema>;
 
 export const createIssueAction = async (issue: Issue) => {
-  const validation = createIssueSchema.safeParse(issue);
+  const validation = issueSchema.safeParse(issue);
 
   if (!validation.success) {
     return { error: validation.error.format() };
@@ -25,7 +25,7 @@ export const createIssueAction = async (issue: Issue) => {
 };
 
 export const updateIssueAction = async (id: string, issue: Issue) => {
-  const validation = createIssueSchema.safeParse(issue);
+  const validation = issueSchema.safeParse(issue);
 
   if (!validation.success) return { error: validation.error.format() };
 
@@ -44,5 +44,23 @@ export const updateIssueAction = async (id: string, issue: Issue) => {
     revalidatePath("/issues");
   } catch (error) {
     return { error: "Failed to update issue" };
+  }
+};
+
+export const deleteIssueAction = async (id: string) => {
+  const foundIssue = await prisma.issue.findUnique({
+    where: { id },
+  });
+
+  if (!foundIssue) return { error: "Issue not found" };
+
+  try {
+    await prisma.issue.delete({
+      where: { id },
+    });
+
+    revalidatePath("/issues");
+  } catch (error) {
+    return { error: "Failed to delete issue" };
   }
 };

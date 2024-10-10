@@ -9,16 +9,16 @@ type IssueDetailsProps = {
 
 const IssueDetails = ({ issue }: IssueDetailsProps) => {
   return (
-    <div>
+    <>
       <h1 className="text-3xl font-semibold">{issue.title}</h1>
       <div className="flex space-x-3 mt-3 mb-10">
         <IssueStatusBadge status={issue.status} />
         <p>{issue.createdAt.toDateString()}</p>
       </div>
-      <Card className="p-4 prose max-w-3xl">
+      <Card className="p-4 prose max-w-full">
         <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
-    </div>
+    </>
   );
 };
 
