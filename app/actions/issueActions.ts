@@ -20,6 +20,6 @@ export const createIssueAction = async (issue: Issue) => {
   } catch (error) {
     return { error: "Failed to create issue" };
   } finally {
-    revalidatePath("/");
+    revalidatePath("/issues");
   }
 };

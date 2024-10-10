@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 const routes = [
   { path: "/", name: "Dashboard" },
   { path: "/issues", name: "Issues" },
-  { path: "create", name: "Create" },
 ];
 
 const NavBar = () => {
