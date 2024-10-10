@@ -14,7 +14,7 @@ const NavBar = () => {
   const pathname = usePathname();
 
   return (
-    <header className="h-14 border-b">
+    <header className="h-16 border-b shadow-sm">
       <Container className="flex items-center space-x-6">
         <Link href="/">
           <Bug />
@@ -25,7 +25,7 @@ const NavBar = () => {
               <li
                 key={route.path}
                 className={cn({
-                  "text-zinc-500 hover:text-blue-500 transition-colors": true,
+                  "text-zinc-500 hover:text-blue-500 transition-colors font-medium": true,
                   "text-blue-500": pathname === route.path,
                 })}
               >
