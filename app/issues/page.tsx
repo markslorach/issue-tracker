@@ -1,5 +1,5 @@
-import IssuesActions from "../components/IssuesActions";
-import IssuesList from "../components/IssuesList";
+import IssuesActions from "./_components/IssuesActions";
+import IssuesList from "./_components/IssuesList";
 import { Suspense } from "react";
 import LoadingIssuesSkeleton from "../components/Skeletons/LoadingIssuesSkeleton";
 
