@@ -5,7 +5,6 @@ import SimpleMDE from "react-simplemde-editor";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-
 import { createIssueAction } from "@/app/actions/issueActions";
 import { toast } from "sonner";
 import { createIssueSchema } from "@/app/validationSchemas";

@@ -13,7 +13,7 @@ type IssueDetailsPageProps = {
 
 const IssueDetailsPage = async ({ params }: IssueDetailsPageProps) => {
   const { issue } = await getIssue(params.id);
-  await delay(1000);
+//   await delay(1000);
 
   if (!issue) notFound();
 
@@ -24,7 +24,7 @@ const IssueDetailsPage = async ({ params }: IssueDetailsPageProps) => {
         <IssueStatusBadge status={issue.status} />
         <p>{issue.createdAt.toDateString()}</p>
       </div>
-      <Card className="p-4 prose">
+      <Card className="p-4 prose max-w-3xl">
         <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
     </div>

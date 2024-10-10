@@ -1,9 +1,8 @@
-import React from 'react'
+import LoadingIssueDetailsSkeleton from "@/app/components/Skeletons/LoadingIssueDetailsSkeleton";
+import React from "react";
 
 const LoadingIssueDetailPage = () => {
-  return (
-    <div>Loading...</div>
-  )
-}
+  return <LoadingIssueDetailsSkeleton />;
+};
 
-export default LoadingIssueDetailPage
+export default LoadingIssueDetailPage;

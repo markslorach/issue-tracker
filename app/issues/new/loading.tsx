@@ -1,9 +1,7 @@
-import React from 'react'
+import LoadingNewIssueSkeleton from "@/app/components/Skeletons/LoadingNewIssueSkeleton";
 
 const LoadingNewIssuePage = () => {
-  return (
-    <div>Loading...</div>
-  )
-}
+  return <LoadingNewIssueSkeleton />;
+};
 
-export default LoadingNewIssuePage
+export default LoadingNewIssuePage;
