@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Issue } from "@prisma/client";
+import delay from "delay";
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
@@ -45,6 +46,7 @@ const IssueForm = ({ issue }: IssueFormProps) => {
     try {
       if (issue) await updateIssueAction(issue.id, newIssue);
       else await createIssueAction(newIssue);
+      await delay(600);
       router.push("/issues");
     } catch (error) {
       toast.error("An unexpected error occurred");

@@ -11,7 +11,10 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
+import delay from "delay";
+import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 type DeleteInvoiceButtonProps = {
@@ -19,10 +22,22 @@ type DeleteInvoiceButtonProps = {
 };
 
 const DeleteInvoiceButton = ({ issueId }: DeleteInvoiceButtonProps) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const router = useRouter();
 
-  const handleDeleteIssue = async (id: string) => {
-    const result = await deleteIssueAction(id);
+  const handleDeleteIssue = async (formData: FormData) => {
+    const issueToDelete = formData.get("issueId") as string;
+
+    // if (typeof issueToDelete !== "string") {
+    //     toast.error("Invalid issue ID");
+    //     return;
+    //   }
+
+    const result = await deleteIssueAction(issueToDelete);
+    setIsDeleting(true);
+    await delay(800);
+    setIsDeleting(false);
 
     if (result?.error) {
       toast.error(result.error);
@@ -35,7 +50,10 @@ const DeleteInvoiceButton = ({ issueId }: DeleteInvoiceButtonProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-       <Button variant="destructive">Delete Issue</Button>
+        <Button disabled={isDeleting} variant="destructive">
+          Delete Issue
+          {isDeleting && <LoaderCircle className="w-4 h-4 ml-2 animate-spin" />}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -49,12 +67,12 @@ const DeleteInvoiceButton = ({ issueId }: DeleteInvoiceButtonProps) => {
           <DialogClose>
             <Button variant="secondary">Cancel</Button>
           </DialogClose>
-          <Button
-            onClick={() => handleDeleteIssue(issueId)}
-            variant="destructive"
-          >
-            Delete
-          </Button>
+          <form action={handleDeleteIssue}>
+            <input type="hidden" value={issueId} name="issueId" />
+            <DialogClose>
+              <Button variant="destructive">Delete</Button>
+            </DialogClose>
+          </form>
         </DialogFooter>
       </DialogContent>
     </Dialog>
