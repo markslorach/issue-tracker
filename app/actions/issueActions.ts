@@ -2,10 +2,11 @@
 import { z } from "zod";
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { issueSchema } from "../validationSchemas";
+import { patchIssueSchema, issueSchema } from "../validationSchemas";
 import { auth } from "@clerk/nextjs/server";
 
 type Issue = z.infer<typeof issueSchema>;
+type PatchIssue = z.infer<typeof patchIssueSchema>;
 
 export const createIssueAction = async (issue: Issue) => {
   const { userId } = auth();
@@ -29,14 +30,22 @@ export const createIssueAction = async (issue: Issue) => {
   }
 };
 
-export const updateIssueAction = async (id: string, issue: Issue) => {
+export const updateIssueAction = async (id: string, issue: PatchIssue) => {
   const { userId } = auth();
 
   if (!userId) return { error: "Unauthorized" };
 
-  const validation = issueSchema.safeParse(issue);
+  const validation = patchIssueSchema.safeParse(issue);
 
   if (!validation.success) return { error: validation.error.format() };
+
+  if (issue.assignedToUserId) {
+    const user = await prisma.user.findUnique({
+      where: { clerkUserId: issue.assignedToUserId },
+    });
+
+    if (!user) return { error: "User not found" };
+  }
 
   const foundIssue = await prisma.issue.findUnique({
     where: { id },
