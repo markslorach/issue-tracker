@@ -18,7 +18,7 @@ type AssigneeSelectProps = {
 };
 
 const AssigneeSelect = ({ users, issue }: AssigneeSelectProps) => {
-  const handleAssigneeChange = async (value: string) => {
+  const handleAssignIssue = async (value: string) => {
     const updatedIssue = {
       ...issue,
       assignedToUserId: value === "unassigned" ? null : value,
@@ -32,7 +32,10 @@ const AssigneeSelect = ({ users, issue }: AssigneeSelectProps) => {
   };
 
   return (
-    <Select onValueChange={handleAssigneeChange} defaultValue={issue.assignedToUserId || "unassigned"}>
+    <Select
+      onValueChange={handleAssignIssue}
+      defaultValue={issue.assignedToUserId || "unassigned"}
+    >
       <SelectTrigger>
         <SelectValue placeholder="Assignee..." />
       </SelectTrigger>

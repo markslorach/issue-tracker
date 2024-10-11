@@ -8,6 +8,7 @@ import { auth } from "@clerk/nextjs/server";
 type Issue = z.infer<typeof issueSchema>;
 type PatchIssue = z.infer<typeof patchIssueSchema>;
 
+// CREATE ISSUE ACTION
 export const createIssueAction = async (issue: Issue) => {
   const { userId } = auth();
 
@@ -30,6 +31,8 @@ export const createIssueAction = async (issue: Issue) => {
   }
 };
 
+
+// UPDATE ISSUE ACTION
 export const updateIssueAction = async (id: string, issue: PatchIssue) => {
   const { userId } = auth();
 
@@ -65,6 +68,8 @@ export const updateIssueAction = async (id: string, issue: PatchIssue) => {
   }
 };
 
+
+// DELETE ISSUE ACTION
 export const deleteIssueAction = async (id: string) => {
   const { userId } = auth();
 
@@ -84,5 +89,29 @@ export const deleteIssueAction = async (id: string) => {
     revalidatePath("/issues");
   } catch (error) {
     return { error: "Failed to delete issue" };
+  }
+};
+
+// UPDATE ISSUE STATUS ACTION
+export const updateIssueStatusAction = async (id: string, status: string) => {
+  const { userId } = auth();
+
+  if (!userId) return { error: "Unauthorized" };
+
+  const foundIssue = await prisma.issue.findUnique({
+    where: { id },
+  });
+
+  if (!foundIssue) return { error: "Issue not found" };
+
+  try {
+    await prisma.issue.update({
+      where: { id },
+      data: { status },
+    });
+
+    revalidatePath("/issues");
+  } catch (error) {
+    return { error: "Failed to update issue status" };
   }
 };

@@ -1,3 +1,4 @@
+"use client"
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import React from "react";
@@ -7,6 +8,7 @@ type IssueStatusBadgeProps = {
 };
 
 const IssueStatusBadge = ({ status }: IssueStatusBadgeProps) => {
+
   return (
     <Badge
       className={cn({
