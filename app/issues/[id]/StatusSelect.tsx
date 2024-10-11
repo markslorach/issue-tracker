@@ -7,14 +7,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 type StatusSelectProps = {
   issueId: string;
+  setOptimisticStatus: (status: string) => void;
 };
 
 const statuses = ["Open", "In Progress", "Closed"];
-const StatusSelect = ({ issueId }: StatusSelectProps) => {
+const StatusSelect = ({ issueId, setOptimisticStatus }: StatusSelectProps) => {
   const handleChangeStatus = async (status: string) => {
-    await updateIssueStatusAction(issueId, status);
+    setOptimisticStatus(status);
+    const result = await updateIssueStatusAction(issueId, status);
+
+    if (result?.error) {
+      toast.error(result.error);
+    }
   };
 
   return (

@@ -13,15 +13,20 @@ type IssueDetailsProps = {
 };
 
 const IssueDetails = ({ issue, userId }: IssueDetailsProps) => {
+  const [currentStatus, setCurrentStatus] = useOptimistic(issue.status, (
+    (state, newStatus)  => {
+      return String(newStatus)
+    }
+  ));
   return (
     <>
       <div className="flex justify-between">
         <h1 className="text-3xl font-semibold">{issue.title}</h1>
-        {userId && <StatusSelect issueId={issue.id} />}
+        {userId && <StatusSelect setOptimisticStatus={setCurrentStatus} issueId={issue.id} />}
       </div>
 
       <div className="flex space-x-3 mt-3 mb-10">
-        <IssueStatusBadge status={issue.status} />
+        <IssueStatusBadge status={currentStatus} />
         <p>{issue.createdAt.toDateString()}</p>
       </div>
       <Card className="p-4 prose max-w-full">
