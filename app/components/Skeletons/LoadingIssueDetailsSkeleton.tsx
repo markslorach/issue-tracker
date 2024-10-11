@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/Skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const LoadingIssueDetailsSkeleton = () => {
   return (

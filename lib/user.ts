@@ -9,23 +9,24 @@ export const getUser = async () => {
   }
 
   const email = clerkUser.emailAddresses[0].emailAddress;
+  const clerkUserId = clerkUser.id;
 
   try {
     const user = await prisma.user.upsert({
       where: {
-        clerkUserId: clerkUser.id,
+        clerkUserId,
       },
       update: {
         email,
       },
       create: {
-        clerkUserId: clerkUser.id,
+        clerkUserId,
         email,
       },
     });
 
     return { user };
   } catch (error) {
-    return { error: "An error occurred while fetching the user" };
+    console.log(error)
   }
 };

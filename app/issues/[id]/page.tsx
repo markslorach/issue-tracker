@@ -1,10 +1,10 @@
-import { getIssue } from "@/lib/issues";
 import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
-import delay from "delay";
 import DeleteInvoiceButton from "./DeleteInvoiceButton";
 import { auth } from "@clerk/nextjs/server";
+
+import prisma from "@/lib/db";
 
 type IssueDetailsPageProps = {
   params: {
@@ -15,8 +15,11 @@ type IssueDetailsPageProps = {
 const IssueDetailsPage = async ({ params }: IssueDetailsPageProps) => {
   const { userId } = auth();
 
-  const { issue } = await getIssue(params.id);
-  //   await delay(1000);
+  const issue = await prisma.issue.findUnique({
+    where: {
+      id: params.id,
+    },
+  });
 
   if (!issue) notFound();
 

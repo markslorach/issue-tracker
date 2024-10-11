@@ -6,7 +6,7 @@ import {
     TableCell,
     Table,
   } from "@/components/ui/table";
-  import { Skeleton } from "@/components/ui/Skeleton";
+  import { Skeleton } from "@/components/ui/skeleton";
   
   const LoadingIssuesSkeleton = () => {
     const issues = [1, 2, 3, 4, 5];

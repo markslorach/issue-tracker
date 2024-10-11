@@ -1,14 +1,15 @@
-import { createIssueSchema } from "@/app/validationSchemas";
+
+import { issueSchema } from "@/app/validationSchemas";
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-type Issue = z.infer<typeof createIssueSchema>;
+type Issue = z.infer<typeof issueSchema>;
 
 export async function POST(req: NextRequest) {
   const body: Issue = await req.json();
 
-  const validation = createIssueSchema.safeParse(body);
+  const validation = issueSchema.safeParse(body);
 
   if (!validation.success) {
     return NextResponse.json(validation.error.errors, { status: 400 });

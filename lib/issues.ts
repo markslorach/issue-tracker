@@ -9,7 +9,7 @@ export const getIssues = async () => {
     });
     return { issues };
   } catch (error) {
-    return { error: "Error fetching issues" };
+    console.log(error)
   }
 };
 
@@ -20,8 +20,8 @@ export const getIssue = async (id: string) => {
         id,
       },
     });
-    return { issue };
+    return { issue }
   } catch (error) {
-    return { error: "Error fetching issue" };
+    console.log(error)
   }
 };

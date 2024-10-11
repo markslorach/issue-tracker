@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { getIssues } from "@/lib/issues";
 import {
   Table,
   TableBody,
@@ -9,11 +8,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import IssueStatusBadge from "./IssueStatusBadge";
-import delay from "delay";
+import prisma from "@/lib/db";
 
 const IssuesList = async () => {
-  const { issues } = await getIssues();
-  // await delay(2000)
+  const issues = await prisma.issue.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   return (
     <>
