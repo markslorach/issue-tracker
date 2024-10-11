@@ -1,6 +1,12 @@
 import { getIssue } from "@/lib/issues";
-import IssueForm from "../../_components/IssueForm";
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
+import LoadingNewIssueSkeleton from "@/app/components/Skeletons/LoadingNewIssueSkeleton";
+
+const IssueForm = dynamic(() => import("../../_components/IssueForm"), {
+  ssr: false,
+  loading: () => <LoadingNewIssueSkeleton />,
+});
 
 type EditIssuePageProps = {
   params: {
