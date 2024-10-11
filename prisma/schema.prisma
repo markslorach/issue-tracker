@@ -18,3 +18,11 @@ model Issue {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model User {
+  id        String   @id @default(cuid())
+  clerkUserId   String   @unique
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

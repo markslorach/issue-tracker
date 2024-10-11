@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import NavBar from "./components/shared/NavBar";
 import Container from "./components/shared/Container";
 import { Toaster } from "sonner";
 import { ClerkProvider } from "@clerk/nextjs";
+import Header from "./components/shared/Header";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,11 +27,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  
+
   return (
     <ClerkProvider>
       <html lang="en">
         <body className={`${geistSans.className} antialiased`}>
-          <NavBar />
+          <Header />
           <Container className="pt-12">{children}</Container>
           <Toaster position="top-right" />
         </body>
