@@ -4,6 +4,7 @@ import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 import delay from "delay";
 import DeleteInvoiceButton from "./DeleteInvoiceButton";
+import { auth } from "@clerk/nextjs/server";
 
 type IssueDetailsPageProps = {
   params: {
@@ -12,6 +13,8 @@ type IssueDetailsPageProps = {
 };
 
 const IssueDetailsPage = async ({ params }: IssueDetailsPageProps) => {
+  const { userId } = auth();
+
   const { issue } = await getIssue(params.id);
   //   await delay(1000);
 
@@ -22,10 +25,12 @@ const IssueDetailsPage = async ({ params }: IssueDetailsPageProps) => {
       <div className="md:col-span-4">
         <IssueDetails issue={issue} />
       </div>
-      <div className="flex flex-col md:col-span-1 space-y-3">
-        <EditIssueButton issueId={issue.id} />
-        <DeleteInvoiceButton issueId={issue.id} />
-      </div>
+      {userId && (
+        <div className="flex flex-col md:col-span-1 space-y-3">
+          <EditIssueButton issueId={issue.id} />
+          <DeleteInvoiceButton issueId={issue.id} />
+        </div>
+      )}
     </div>
   );
 };
